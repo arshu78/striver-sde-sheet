@@ -21,26 +21,27 @@ private:
     }
 public:
     bool isPalindrome(ListNode* head) {
-        ListNode* fast=head,*slow=head;
-        while(fast->next!=NULL&& fast->next->next!=NULL)
+         if(head==NULL||head->next==NULL) return true;
+      ListNode* fast=head,*slow=head;
+        while(fast->next!=NULL && fast->next->next!=NULL)
         {
-            slow=slow->next;
             fast=fast->next->next;
+            slow=slow->next;
         }
+        ListNode* mid=slow;
+        
         slow->next=reverseList(slow->next);
-        
-        ListNode *temp=head,*mid=slow->next;
-        
-         while(mid!=NULL)
+        slow=slow->next;
+        fast=head;
+        while(slow!=NULL)
         {
-            if(temp->val!=mid->val)
-            {
-                return false;
-            }
-            temp=temp->next;
-            mid=mid->next;
+            if(fast->val!=slow->val) return false;
+            
+            slow=slow->next;
+            fast=fast->next;
         }
-        slow->next=reverseList(slow->next);
+        mid->next=reverseList(mid->next);
         return true;
+        
     }
 };
