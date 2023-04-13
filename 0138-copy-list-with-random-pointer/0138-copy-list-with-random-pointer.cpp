@@ -17,38 +17,37 @@ public:
 class Solution {
 public:
     Node* copyRandomList(Node* head) {
-        Node* temp=head,*front=head;
+        Node *temp=head,*front=head;
         
-        //first step for creating copy nodes
+        //creating copies node
         
         while(temp!=NULL)
         {
             front=temp->next;
             Node* copy=new Node(temp->val);
-            
             temp->next=copy;
             copy->next=front;
             temp=front;
         }
         
-        //changing the random pointers
+        //assigning random pointers
         
         temp=head;
-        
         while(temp!=NULL)
         {
-            if(temp->random!=NULL)
-            {
-                temp->next->random=temp->random->next;
-            }
+             if(temp->random!=NULL)
+             {
+                 temp->next->random=temp->random->next;
+             }
+            
             temp=temp->next->next;
         }
         
-        //resoting the original list
+        //rearrange original list
         
-        temp=head;
-        Node* dummy=new Node(0);
+        Node* dummy= new Node(-1);
         Node* copy=dummy;
+        temp=head;
         while(temp!=NULL)
         {
             front=temp->next->next;
