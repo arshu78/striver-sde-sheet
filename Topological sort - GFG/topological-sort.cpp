@@ -6,36 +6,37 @@ using namespace std;
 class Solution
 {
 	public:
-	void topo(int node,vector<int> adj[],vector<int>& vis,stack<int>& st)
-	{
-	    vis[node]=1;
-	    for(auto it:adj[node])
-	    {
-	        if(!vis[it])
-	        {
-	            topo(it,adj,vis,st);
-	        }
-	    }
-	    st.push(node);
-	}
 	//Function to return list containing vertices in Topological order. 
 	vector<int> topoSort(int V, vector<int> adj[]) 
 	{
-	    vector<int> vis(V,0);
-	    stack<int> st;
+	    vector<int> indeg(V,0);
+	    queue<int> q;
 	    for(int i=0;i<V;i++)
 	    {
-	        if(!vis[i])
+	        for(auto it:adj[i])
 	        {
-	            topo(i,adj,vis,st);
+	            indeg[it]++;
+	        }
+	    }
+	    for(int i=0;i<V;i++)
+	    {
+	        if(indeg[i]==0)
+	        {
+	            q.push(i);
 	        }
 	    }
 	    
 	    vector<int> ans;
-	    while(!st.empty())
+	    while(!q.empty())
 	    {
-	        ans.push_back(st.top());
-	        st.pop();
+	        int ele=q.front();
+	        q.pop();
+	        ans.push_back(ele);
+	        for(auto it:adj[ele])
+	        {
+	            indeg[it]--;
+	            if(indeg[it]==0) q.push(it);
+	        }
 	    }
 	    return ans;
 	}
