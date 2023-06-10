@@ -6,10 +6,7 @@ public:
         while(low<=high)
         {
             long mid=(low+high)>>1;
-            long ls=0;
-            long rs=0;
-            long m=mid-1;
-            long sum=mid;
+            long ls=0,rs=0,m=mid-1,sum=0;
             if(r<=m)
             {
                 rs=m*(m+1) /2 - (m-r) * (m-r+1)/2;
@@ -28,7 +25,7 @@ public:
                 ls=m*(m+1)/2 + (l-m);  // add remainings ones
             }
             
-            sum+= ls + rs;
+            sum= mid +  ls + rs;  //[[leftpart sum]+[index]+[right part sum]]
             if(sum<=maxSum)
             {
                 ans=mid;
