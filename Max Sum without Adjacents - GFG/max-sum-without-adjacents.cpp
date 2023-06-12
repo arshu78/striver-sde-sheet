@@ -13,7 +13,7 @@ public:
 	{
 	    if(i==0) return arr[i];
 	    
-	    if(i<0) return 0;
+	   // if(i<0) return 0;
 	    if(dp[i]!=-1) return dp[i];
 	    int npick= 0 + f(i-1,arr,dp);
 	    int pick=INT_MAX;
