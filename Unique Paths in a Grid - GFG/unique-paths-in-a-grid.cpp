@@ -22,7 +22,33 @@ class Solution {
     }
     int uniquePaths(int n, int m, vector<vector<int>> &grid) {
         vector<vector<int>> dp(n+1,vector<int> (m+1,-1));
-        return f(n-1,m-1,grid,dp) % mod;
+        for(int i=0;i<n;i++)
+       {
+           for(int j=0;j<m;j++)
+           {
+               if(i==0 && j==0 && grid[i][j]!=0) 
+               {
+                   dp[i][j]=1;
+                   continue;
+               }
+               else if(grid[i][j]==0)
+               {
+                    dp[i][j]=0;
+                    continue;
+               } 
+               else
+               {
+                   int up=0;
+                   int left=0;
+                   if(i>0) up=dp[i-1][j] % mod;
+                   if(j>0) left=dp[i][j-1] % mod;
+
+                   dp[i][j]=(up+left) % mod;
+               }
+           } 
+        }
+
+       return dp[n-1][m-1] % mod;
     }
 };
 
