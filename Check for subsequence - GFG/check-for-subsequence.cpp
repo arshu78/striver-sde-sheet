@@ -6,26 +6,20 @@ using namespace std;
 
 class Solution{
     public:
+    bool f(int i,int j,string &A,string &B)
+    {
+        if(j==A.length()-1) return true;
+        if(i==B.length()-1)
+        {
+            return false;
+        }
+        if(A[j]==B[i]) return f(i+1,j+1,A,B);
+        else
+        return f(i+1,j,A,B);
+    }
     bool isSubSequence(string A, string B) 
     {
-        int i=0,j=0;
-        int n=A.length(),m=B.length();
-        
-        while(i<n && j<m)
-        {
-            if(A[i]==B[j]) 
-            {
-                i++;
-                j++;
-            }
-            else
-            {
-                j++;
-            }
-        }
-        if(i==n) return true;
-        
-        return false;
+        return f(0,0,A,B);
     }
 };
 
