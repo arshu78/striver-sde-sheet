@@ -15,7 +15,6 @@ public:
 	    {
 	        if(arr[i]==i+1) ans.push_back(arr[i]);
 	    }
-	    if(ans.size()==0) return {};
 	    
 	    return ans;
 	}
