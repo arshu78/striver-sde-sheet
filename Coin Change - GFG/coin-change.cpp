@@ -24,8 +24,28 @@ class Solution {
     }
     long long int count(int coins[], int N, int sum) {
 
-        vector<vector<long long int>> dp(N+1,vector<long long int>(sum+1,-1));
-        return f(N-1,sum,coins,dp);
+        vector<vector<long long int>> dp(N+1,vector<long long int>(sum+1,-0));
+        
+        for(int i=0;i<=sum;i++)
+        {
+            dp[0][i]=(i % coins[0]==0);
+        }
+        
+        for(int i=1;i<N;i++)
+        {
+            for(int t=0;t<=sum;t++)
+            {
+                 long long int nt= 0 + dp[i-1][t];
+        long long int tk=0;
+        if(coins[i]<=t)
+        {
+            tk=dp[i][t-coins[i]];
+        }
+        
+        dp[i][t]= nt + tk;
+            }
+        }
+        return dp[N-1][sum];
     }
 };
 
