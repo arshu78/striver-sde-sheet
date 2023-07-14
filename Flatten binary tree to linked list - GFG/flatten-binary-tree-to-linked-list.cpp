@@ -99,18 +99,16 @@ void inorder(struct Node* root)
 class Solution
 {
     public:
-   Node* prev=NULL;
-    void flatten(Node *node)
+    Node* prev=NULL;
+    void flatten(Node *root)
     {
+        if(root==NULL) return;
         
-            if(node==NULL) return;
-            
-            flatten(node->right);
-            flatten(node->left);
-            
-            node->right=prev;
-            node->left=NULL;
-            prev=node;
+        flatten(root->right);
+        flatten(root->left);
+        root->right=prev;
+        root->left=NULL;
+        prev=root;
     }
 };
 
