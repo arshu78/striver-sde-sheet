@@ -99,22 +99,28 @@ class Solution{
   public:
     // root : the root Node of the given BST
     // target : the target sum
-    bool f(Node* root,int &target,map<int,int>& mp)
+    void f(struct Node* root,vector<int>& ans)
     {
-        if(root==NULL) return false;
-        
-        if(mp.find(target-root->data)!=mp.end()) return true;
-        else mp[root->data]++;
-        
-        bool left=f(root->left,target,mp);
-        bool right=f(root->right,target,mp);
-        
-        return left || right;
+        if(root==NULL) return;
+        f(root->left,ans);
+        ans.push_back(root->data);
+        f(root->right,ans);
     }
     int isPairPresent(struct Node *root, int target)
     {
-        map<int,int> mp;
-        return f(root,target,mp);
+        vector<int> arr;
+        f(root,arr);
+       // sort(arr.begin(),arr.end());
+        int l=0,r=arr.size()-1;
+        
+        while(l<=r)
+        {
+            if(arr[l] + arr[r]==target) return 1;
+            else if(arr[l] + arr[r]<target) l++;
+            else r--;
+        }
+        
+        return 0;
     }
 };
 
