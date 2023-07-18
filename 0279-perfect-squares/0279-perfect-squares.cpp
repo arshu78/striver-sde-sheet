@@ -27,6 +27,6 @@ public:
         
             dp[j]= ans;
         }
-        return solve(n,dp);
+        return dp[n];
     }
 };
