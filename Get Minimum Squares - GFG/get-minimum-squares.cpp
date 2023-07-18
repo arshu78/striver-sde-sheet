@@ -21,10 +21,22 @@ class Solution{
 	    
 	    return dp[n]= ans;
 	}
-	int MinSquares(int n)
+	int MinSquares(int N)
 	{
-	    vector<int> dp(n+1,-1);
-	   return f(n,dp);
+	    vector<int> dp(N+1,0);
+	    
+	    for(int n=1;n<=N;n++)
+	    {
+	        int ans=INT_MAX;
+    	    for(int i=1;i*i<=n;i++)
+    	    {
+    	        if(n-i*i>=0)
+    	        ans=min(ans,1+ dp[n-i*i]);
+    	    }
+    	    
+    	   dp[n]= ans;
+	    }
+	   return dp[N];
 	}
 };
 
