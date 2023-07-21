@@ -9,7 +9,7 @@ using namespace std;
 
 class Solution {
     public:
-    bool bfs(int i,int j,vector<vector<int>>& grid,vector<vector<int>>& vis)
+     bool bfs(int i,int j,vector<vector<int>>& grid,vector<vector<int>>& vis)
     {
         queue<pair<int,int>> q;
         q.push({i,j});
