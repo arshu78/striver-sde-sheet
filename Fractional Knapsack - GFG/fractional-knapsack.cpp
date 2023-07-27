@@ -21,37 +21,38 @@ struct Item{
 class Solution
 {
     public:
-    static bool comp(Item a,Item b)
+    static bool cmp(pair<double,Item> a,pair<double,Item> b)
     {
-        double i=(double)a.value / (double) a.weight;
-        double j=(double)b.value / (double) b.weight;
-        
-        return i > j;
+        return a.first>b.first;
     }
     //Function to get the maximum total value in the knapsack.
     double fractionalKnapsack(int W, Item arr[], int n)
     {
-        sort(arr,arr+n,comp);
-        
-        int cur=0;
-        double find=0.0;
+        vector<pair<double,Item>> v;
         
         for(int i=0;i<n;i++)
         {
-            if(arr[i].weight + cur <=W)
+            v.push_back({(1.0 * arr[i].value)/arr[i].weight,arr[i]});
+        }
+        
+        
+        sort(v.begin(),v.end(),cmp);
+        double ans=0.0;
+        for(int i=0;i<n;i++)
+        {
+            if(v[i].second.weight>W)
             {
-                cur+=arr[i].weight;
-                find+=arr[i].value;
-                
+                ans+=v[i].first * W;
+                W=0;
             }
             else
             {
-                int remain= W - cur;
-                find+=  arr[i].value / (double)arr[i].weight * (double) remain;
-                break;
+                ans+=v[i].second.value;
+                W-=v[i].second.weight;
             }
         }
-        return find;
+        
+        return ans;
     }
         
 };
