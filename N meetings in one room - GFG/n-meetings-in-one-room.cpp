@@ -3,47 +3,39 @@
 using namespace std;
 
 // } Driver Code Ends
-
 class Solution
 {
     public:
+    
+    static bool cmp(pair<int,int> a,pair<int,int> b)
+    {
+        return a.second<b.second;
+    }
     //Function to find the maximum number of meetings that can
     //be performed in a meeting room.
-      struct meeting
-    {
-        int start;
-        int end;
-        int pos;
-    };
-  
-   static bool comparater(struct meeting m1,struct meeting m2)
-    {
-        if(m1.end<m2.end) return true;
-        else if(m1.end>m2.end) return false;
-        else if(m1.pos<m2.pos) return true;
-        else return false;
-        
-    }
     int maxMeetings(int start[], int end[], int n)
     {
-        struct meeting meet[n];
-        for(int i=0;i<n;i++)
-        {
-            meet[i].start=start[i],meet[i].end=end[i],meet[i].pos=i+1;
-        }
-        
-        sort(meet,meet+n,comparater);
-        int limit=meet[0].end;
-        int ans=1;
-        for(int i=1;i<n;i++)
-        {
-            if(meet[i].start>limit)
+            vector<pair<int,int>> v;
+            
+            for(int i=0;i<n;i++)
             {
-                limit=meet[i].end;
-                ans++;
+                v.push_back({start[i],end[i]});
             }
-        }
-        return ans;
+            
+            sort(v.begin(),v.end(),cmp);
+            
+            int cnt=1,e=v[0].second;
+            
+            for(int i=1;i<n;i++)
+            {
+                if(v[i].first>e)
+                {
+                    cnt++;
+                    e=v[i].second;
+                }
+            }
+            
+            return cnt;
     }
 };
 
