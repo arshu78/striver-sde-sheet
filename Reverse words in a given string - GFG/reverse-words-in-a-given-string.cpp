@@ -8,34 +8,29 @@ class Solution
 {
     public:
     //Function to reverse words in a given string.
-    string reverseWords(string s) 
+    string reverseWords(string S) 
     { 
-         s+=".";
-    
-    string w="";
-    
-    string str="";     // ans string 
-    
-    for(int i=0;i<s.size();i++){
-	
-        if(s[i]!='.'){
-            w+=s[i];
+        string ans="",temp;
+        
+        for(int i=S.length()-1;i>=0;i--)
+        {
+            if(S[i]=='.')
+            {
+                reverse(temp.begin(),temp.end());
+                ans+=temp+ ".";
+                temp="";
+            }
+            else
+            {
+                temp.push_back(S[i]);
+            }
         }
-		
-        else if(s[i]=='.' &&  w.size()>0){
-            reverse(w.begin(),w.end());
-            string temp=w+".";
-            str+=temp;
-            w="";
-        }
-    }
-    
-	
-    str.pop_back();
-	
-    reverse(str.begin(),str.end());
-    
-    return str;
+        reverse(temp.begin(),temp.end());
+        ans+=temp;
+        
+        
+        return ans;
+        
     } 
 };
 
