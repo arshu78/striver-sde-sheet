@@ -23,21 +23,18 @@ class Solution
     public:
     Node *copyList(Node *head)
     {
-        Node* temp=head,*front=head;
-        
-        //creating a dummy list;
+        Node* temp=head,* front=head;
         
         while(temp!=NULL)
         {
             front=temp->next;
-            Node* copy=new Node(temp->data);
-            
-            temp->next=copy;
-            copy->next=front;
+            Node* node=new Node(temp->data);
+            temp->next=node;
+            node->next=front;
             temp=front;
         }
         
-        //copy the random pointers
+        //copy the random pointer
         
         temp=head;
         while(temp!=NULL)
@@ -49,18 +46,18 @@ class Solution
             temp=temp->next->next;
         }
         
-        //rearange the list;
-        Node* dummy=new Node(-1);
-        Node* c=dummy;
+        //convert to original list;
         
-        temp=head,front=head;
+        Node* dummy=new Node(-1);
+        Node* cur=dummy;
+        temp=head;
         
         while(temp!=NULL)
         {
             front=temp->next->next;
-            c->next=temp->next;
+            cur->next=temp->next;
             temp->next=front;
-            c=c->next;
+            cur=cur->next;
             temp=front;
         }
         
