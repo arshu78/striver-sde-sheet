@@ -43,68 +43,47 @@ struct Node
 };
 */ 
 
+class cmp{
+    public:
+    bool operator()(Node* a,Node* b){
+        return a->data>b->data;
+    }
+};
+
 class Solution{
   public:
-    Node* mergetwo(Node* n1,Node* n2)
-    {
-        if(n1==NULL) return n2;
-        if(n2==NULL) return n1;
-        
-        Node* dummy=new Node(-1);
-        Node* temp=dummy;
-        
-        while(n1!=NULL && n2!=NULL)
-        {
-            if(n1->data<n2->data)
-            {
-                temp->next=n1;
-                temp=temp->next;
-                n1=n1->next;
-            }
-            else
-            {
-                temp->next=n2;
-                temp=temp->next;
-                n2=n2->next;
-            }
-        }
-        
-        while(n1!=NULL)
-        {
-            temp->next=n1;
-                temp=temp->next;
-                n1=n1->next;
-        }
-        
-        while(n2!=NULL)
-        {
-            temp->next=n2;
-                temp=temp->next;
-                n2=n2->next;
-        }
-        
-        return dummy->next;
-    }
     //Function to merge K sorted linked list.
     Node * mergeKLists(Node *arr[], int K)
     {
-        
-          priority_queue<Node*> pq;
-          for(int i=0;i<K;i++)
-          {
-              pq.push(arr[i]);
-          }
-          while(pq.size()>1)
-          {
-              Node* n1=pq.top();
-              pq.pop();
-              Node* n2=pq.top();
-              pq.pop();
-              
-              pq.push(mergetwo(n1,n2));
-              
-          }
-          return pq.top();
+           priority_queue<Node*,vector<Node*>,cmp> pq;
+           
+           for(int i=0;i<K;i++)
+           {
+               pq.push(arr[i]);
+           }
+           Node* head=NULL,*tail=NULL;
+           while(!pq.empty())
+           {
+               Node* top=pq.top();
+               pq.pop();
+               
+               if(top->next!=NULL)
+               {
+                   pq.push(top->next);
+               }
+               
+               if(head==NULL)
+               {
+                   head=tail=top;
+               }
+               else
+               {
+                   tail->next=top;
+                   tail=top;
+               }
+           }
+           
+           return head;
     }
 };
 
