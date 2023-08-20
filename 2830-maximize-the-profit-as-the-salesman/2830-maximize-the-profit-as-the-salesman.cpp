@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int f(vector<vector<int>>& offers,vector<int> &dp,int n)
+  int f(vector<vector<int>>& offers,vector<int> &dp,int n)
     {
         vector<int> e,s;
         for(auto it :offers)
