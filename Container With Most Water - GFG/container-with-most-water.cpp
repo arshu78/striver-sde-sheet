@@ -10,20 +10,20 @@ using namespace std;
 
 long long maxArea(long long A[], int len)
 {
-    long long int l=0,r=len-1;
-    
-    long long int ans=0;
-    
-    while(l<r)
+    int i=0,j=len-1;
+    int water=0;
+    while(i<j)
     {
-        long long int w= r-l;
-        long long int h=min(A[l],A[r]);
-        ans=max(ans,w*h);
+        int w=j-i;
         
-        if(A[l]>A[r]) r--;
-        else l++;
+        int h=min(A[i],A[j]);
+        water=max(water,w*h);
+        
+        if(A[i]<A[j]) i++;
+        else j--;
     }
-    return ans;
+    
+    return water;
 }
 
 //{ Driver Code Starts.
