@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<int> kWeakestRows(vector<vector<int>>& mat, int k) {
-        vector<pair<int,int>> ans;
+        priority_queue<pair<int,int>> ans;
         for(int i=0;i<mat.size();i++)
         {
             int cnt=0;
@@ -9,15 +9,19 @@ public:
             {
                 if(mat[i][j]==1) cnt++;
             }
-            ans.push_back({cnt,i});
+            ans.push({cnt,i});
+            
+            if(ans.size()>k) ans.pop();
         }
         
-        sort(ans.begin(),ans.end());
-        vector<int> res;
+        //sort(ans.begin(),ans.end());
+        vector<int> res(k);
         
-        for(int i=0;i<ans.size() && k--;i++)
+        while(!ans.empty())
         {
-            res.push_back(ans[i].second);
+            res[k-1]=ans.top().second;
+            ans.pop();
+            k--;
         }
         
         return res;
