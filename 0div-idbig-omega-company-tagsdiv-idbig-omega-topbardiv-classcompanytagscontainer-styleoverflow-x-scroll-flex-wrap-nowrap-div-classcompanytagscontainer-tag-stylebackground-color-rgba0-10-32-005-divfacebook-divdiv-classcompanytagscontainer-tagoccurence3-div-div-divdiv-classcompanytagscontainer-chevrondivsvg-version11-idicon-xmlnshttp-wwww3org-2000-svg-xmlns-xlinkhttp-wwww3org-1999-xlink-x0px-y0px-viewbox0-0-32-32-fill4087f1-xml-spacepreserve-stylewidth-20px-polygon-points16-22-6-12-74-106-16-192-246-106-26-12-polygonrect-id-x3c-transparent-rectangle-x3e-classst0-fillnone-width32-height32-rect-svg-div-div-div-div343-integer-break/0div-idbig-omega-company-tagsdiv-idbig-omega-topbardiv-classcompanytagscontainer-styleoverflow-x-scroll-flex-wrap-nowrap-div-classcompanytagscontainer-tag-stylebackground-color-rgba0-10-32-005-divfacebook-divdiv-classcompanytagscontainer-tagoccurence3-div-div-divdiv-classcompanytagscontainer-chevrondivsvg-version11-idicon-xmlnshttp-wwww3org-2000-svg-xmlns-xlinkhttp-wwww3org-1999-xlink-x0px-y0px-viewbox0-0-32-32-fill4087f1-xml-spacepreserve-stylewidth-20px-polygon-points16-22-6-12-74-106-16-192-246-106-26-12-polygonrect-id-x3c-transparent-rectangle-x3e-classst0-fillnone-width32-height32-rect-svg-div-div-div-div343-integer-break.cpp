@@ -1,25 +1,19 @@
 class Solution {
 public:
-    int dp[100];
-    int f(int n)
+    int f(int n,vector<int>& dp)
     {
         if(n==1) return 1;
-        
         if(dp[n]!=-1) return dp[n];
-        int p=n;
- 
-        for(int ind=2;ind<=n;ind++)
+        int ans=n;
+        for(int i=2;i<=n/2;i++)
         {
-            
-                p=max(p,ind * f(n-ind));
-           
+            ans=max(ans,i*f(n-i,dp));
         }
-        
-        return dp[n]= p;
+        return dp[n]= ans;
     }
     int integerBreak(int n) {
         if(n<=3) return n-1;
-        memset(dp,-1,sizeof(dp));
-        return f(n);
+        vector<int> dp(n+1,-1);
+        return f(n,dp);
     }
 };
