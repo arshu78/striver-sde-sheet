@@ -11,11 +11,23 @@ public:
 	   int ans=0,r=-1;
 	   for(int i=0;i<n;i++)
 	   {
-	       int cnt=0;
-	       for(int j=0;j<m;j++)
+	       vector<int> temp=arr[i];
+	       int l=0,h=m-1;
+	       int a=0;
+	       while(l<=h)
 	       {
-	           if(arr[i][j]==1) cnt++;
+	           int mid=(l+h)>>1;
+	           if(temp[mid] >=1)
+	           {
+	               h=mid-1;
+	           }
+	           else
+	           {
+	               l=mid+1;
+	           }
 	       }
+	       int cnt=(m - l);
+	       
 	       if(cnt>ans)
 	       {
 	           ans=cnt;
