@@ -1,8 +1,8 @@
 class MyHashMap {
 public:
-    unordered_map<int,int> mp;
+    int mp[1000001];
     MyHashMap() {
-        
+        memset(mp,-1,sizeof(mp));
     }
     
     void put(int key, int value) {
@@ -10,15 +10,11 @@ public:
     }
     
     int get(int key) {
-        if(mp.find(key)!=mp.end())
-        {
-            return mp[key];
-        }
-        return -1;
+        return mp[key];
     }
     
     void remove(int key) {
-        mp.erase(key);
+        mp[key]=-1;
     }
 };
 
