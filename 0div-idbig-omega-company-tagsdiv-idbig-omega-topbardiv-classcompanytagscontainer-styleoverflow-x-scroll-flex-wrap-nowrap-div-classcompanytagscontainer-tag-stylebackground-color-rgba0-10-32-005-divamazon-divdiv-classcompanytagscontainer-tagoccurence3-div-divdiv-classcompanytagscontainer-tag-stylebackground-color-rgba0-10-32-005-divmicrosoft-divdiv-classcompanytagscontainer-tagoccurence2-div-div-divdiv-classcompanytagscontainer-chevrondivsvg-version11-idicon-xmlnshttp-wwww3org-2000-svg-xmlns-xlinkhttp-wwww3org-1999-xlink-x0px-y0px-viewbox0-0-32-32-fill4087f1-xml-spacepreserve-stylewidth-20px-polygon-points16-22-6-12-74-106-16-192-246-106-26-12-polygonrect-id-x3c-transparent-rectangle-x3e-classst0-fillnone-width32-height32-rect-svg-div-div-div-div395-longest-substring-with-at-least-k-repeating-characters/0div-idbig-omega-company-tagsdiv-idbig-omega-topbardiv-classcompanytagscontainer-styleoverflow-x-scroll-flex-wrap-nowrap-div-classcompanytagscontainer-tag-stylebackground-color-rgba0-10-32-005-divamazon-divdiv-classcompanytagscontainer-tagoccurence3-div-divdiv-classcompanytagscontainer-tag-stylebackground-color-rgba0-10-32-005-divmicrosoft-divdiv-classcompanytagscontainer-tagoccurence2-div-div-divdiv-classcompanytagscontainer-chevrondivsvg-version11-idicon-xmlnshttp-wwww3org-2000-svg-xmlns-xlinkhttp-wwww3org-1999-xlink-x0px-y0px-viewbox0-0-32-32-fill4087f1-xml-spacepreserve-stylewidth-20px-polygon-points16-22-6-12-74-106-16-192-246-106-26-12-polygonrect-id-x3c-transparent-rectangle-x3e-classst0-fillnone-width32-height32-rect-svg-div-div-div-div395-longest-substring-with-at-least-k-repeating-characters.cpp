@@ -10,20 +10,23 @@ public:
         return true;
     }
     int longestSubstring(string s, int k) {   
-        int ans=0;
-        for(int i=0;i<s.length();i++)
+       if(s.size()==0 || k>s.size()) return 0;
+        if(k==0) return s.size();
+        
+        unordered_map<char,int> mp;
+        for(auto it:s) mp[it]++;
+        int cnt=0;
+        for(auto it:s)
         {
-            vector<int> v(26,0);
-            for(int j=i;j<s.length();j++)
-            {
-                v[s[j] - 'a']++;
-               if(check(v,k))
-               {
-                   ans=max(ans,j-i+1);
-               }
-            }
-          
+            if(mp[it]>=k) cnt++;
+            else break;
         }
-        return ans;
+        
+        if(cnt==s.size()) return s.size();
+        
+        int left=longestSubstring(s.substr(0,cnt),k);
+        int right=longestSubstring(s.substr(cnt+1),k);
+        
+        return max(left,right);
     }
 };
