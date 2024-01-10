@@ -11,77 +11,72 @@
  */
 class Solution {
 public:
-    TreeNode* f(TreeNode* root,int start,map<TreeNode*,TreeNode*>& mpp)
+    
+    int s(TreeNode* root,map<TreeNode*,TreeNode*>& mp,map<TreeNode*,bool>& vis)
+    {
+        queue<pair<TreeNode*,int>> q;
+        q.push({root,0});
+        vis[root]=true;
+        int ans=0;
+        while(!q.empty())
+        {
+            TreeNode* node=q.front().first;
+            int time=q.front().second;
+            ans=max(ans,time);
+            q.pop();
+            
+            if(node->left && !vis[node->left])
+            {
+                vis[node->left]=true;
+                q.push({node->left,time+1});
+            }
+            
+            
+            if(node->right && !vis[node->right])
+            {
+                vis[node->right]=true;
+                q.push({node->right,time+1});
+            }
+            
+            if(mp[node] && !vis[mp[node]])
+            {
+                vis[mp[node]]=true;
+                q.push({mp[node],time+1});
+            }
+        }
+        
+        return ans;
+    }
+    TreeNode* f(TreeNode* root,map<TreeNode*,TreeNode*>& mp,int start,map<TreeNode*,bool>& vis)
     {
         queue<TreeNode*> q;
         q.push(root);
-        TreeNode* target;
+        TreeNode* res;
         while(!q.empty())
         {
-             TreeNode* node=q.front();
-            if(node->val==start)
-            {
-                target=node;
-            }
+            auto a=q.front();
+            vis[a]=false;
             q.pop();
-            if(node->left)
+            if(a->val==start) res=a;
+            
+            if(a->left)
             {
-                mpp[node->left]=node;
-                q.push(node->left);
+                mp[a->left]=a;
+                q.push(a->left);
             }
-            if(node->right)
+            if(a->right)
             {
-                mpp[node->right]=node;
-                q.push(node->right);
+                mp[a->right]=a;
+                q.push(a->right);
             }
         }
-        return target;
+        
+        return res;
     }
-    
-    int find_maxi(TreeNode* target,map<TreeNode*,TreeNode*> mpp)
-{
-    queue<TreeNode*> q;
-    q.push(target);
-    map<TreeNode*,bool> visited;
-    visited[target]=true;
-    int maxi=0;
-    while(!q.empty())
-    {
-        int size=q.size();
-        bool f=false;
-        for(int i=0;i<size;i++)
-        {
-            auto node=q.front();
-            q.pop();
-            if(node->left && !visited[node->left])
-            {
-                f=true;
-                visited[node->left]=true;
-                q.push(node->left);
-                
-            }
-            if(node->right && !visited[node->right])
-            {
-                f=true;
-                visited[node->right]=true;
-                q.push(node->right);
-            }
-            if(mpp[node] && !visited[mpp[node]])
-            {
-                f=true;
-                visited[mpp[node]]=true;
-                q.push(mpp[node]);
-            }
-        }
-        if(f) maxi++;
-    }
-    return maxi;
-}
-    
     int amountOfTime(TreeNode* root, int start) {
         map<TreeNode*,TreeNode*> mp;
-        TreeNode* s=f(root,start,mp);
-         int maxi=find_maxi(s,mp);
-        return maxi;
+        map<TreeNode*,bool> vis;
+        TreeNode* first=f(root,mp,start,vis);
+        return s(first,mp,vis);
     }
 };
