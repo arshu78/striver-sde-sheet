@@ -1,15 +1,13 @@
 class Solution {
 public:
-    int missingNumber(vector<int>& a) {
-          int sum1=0,sum2=0;
-        for(int i=0;i<a.size();i++)
+    int missingNumber(vector<int>& nums) {
+        map<int,int> mp;
+        for(auto it:nums) mp[it]++;
+        
+        for(int i=0;i<=nums.size();i++)
         {
-            sum1=sum1+a[i];
+            if(mp.find(i)==mp.end()) return i;
         }
-        for(int i=0;i<a.size()+1;i++)
-        {
-            sum2=sum2+i;
-        }
-        return(sum2-sum1);
+        return -1;
     }
 };
