@@ -11,19 +11,17 @@
  */
 class Solution {
 public:
-    int diameterOfBinaryTree(TreeNode* root) {
-        int d=0;
-        find(root,d);
-        return d;
-    }
-    int find(TreeNode* root,int& d)
+    int f(TreeNode* r,int &ans)
     {
-        if(root==NULL) return 0;
-        
-        int lh=find(root->left,d);
-        int rh=find(root->right,d);
-        
-        d=max(d,lh+rh); // simultanously calculating the daimeter
-        return 1 + max(lh,rh); // returning the height
+        if(r==NULL) return 0;
+        int left=f(r->left,ans);
+        int right=f(r->right,ans);
+        ans=max(ans,left+right);
+        return 1 + max(left,right);
+    }
+    int diameterOfBinaryTree(TreeNode* root) {
+        int ans=0;
+        f(root,ans);
+        return ans;
     }
 };
