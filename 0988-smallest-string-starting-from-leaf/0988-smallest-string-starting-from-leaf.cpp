@@ -11,32 +11,35 @@
  */
 class Solution {
 public:
-    
-    void f(TreeNode* root,string s,string &ans)
+    void f(TreeNode* root,string temp,string &ans)
     {
-        if(root==NULL) return;
-        
-        s.push_back(root->val + 'a');
-        
-        if(root->left==NULL && root->right==NULL)
+        if(!root) return;
+        if(root->left==NULL && root->right==NULL) 
         {
-            string temp=s;
             reverse(temp.begin(),temp.end());
-            
-            if(ans.empty() || temp<ans)
+             if(ans.empty() || temp<ans)
             {
                 ans=temp;
             }
+            return;
         }
-        
-        f(root->left,s,ans);
-        f(root->right,s,ans);
-        s.pop_back();
+        if(root->left)
+        {
+            temp.push_back('a' + root->left->val);
+            f(root->left,temp,ans);
+            temp.pop_back();
+        }
+        if(root->right)
+        {
+            temp.push_back('a' + root->right->val);
+            f(root->right,temp,ans);
+            temp.pop_back();
+        }
     }
     string smallestFromLeaf(TreeNode* root) {
-        string ans,s;
-        
-        f(root,s,ans);
+        string temp="",ans;
+        temp.push_back(root->val + 'a');
+        f(root,temp,ans);
         return ans;
     }
 };
